@@ -38,6 +38,7 @@ export const ResetCSS = createGlobalStyle`
 
   body {
     margin: 0;
+    font-family: 'Roboto', sans-serif;
   }
 
   /**
