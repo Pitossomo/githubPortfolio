@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
 import { Tabs, TabList, Tab, TabPanel } from "react-tabs";
+import RepositoryItem from '../RepositoryItem';
 
 function Repositories() {
   return (
@@ -13,8 +14,12 @@ function Repositories() {
           <WrapperTab>Repositories</WrapperTab>
           <WrapperTab>Starred</WrapperTab>
         </WrapperTabList>
-        <WrapperTabPanel>panel Repository</WrapperTabPanel>
-        <WrapperTabPanel>panel Starred</WrapperTabPanel>
+        <WrapperTabPanel>
+          <RepositoryItem />
+        </WrapperTabPanel>
+        <WrapperTabPanel>
+          <RepositoryItem />
+        </WrapperTabPanel>
       </WrapperTabs>      
     </div>
   )
