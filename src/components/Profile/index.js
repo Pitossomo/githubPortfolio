@@ -92,5 +92,4 @@ const WrapperImage = styled.img`
   margin: 8px;
 `;
 
-
 export default Profile
