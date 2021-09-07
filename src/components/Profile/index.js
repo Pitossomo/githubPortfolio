@@ -4,19 +4,17 @@ import useGithub from '../../hooks/githubHooks'
  
 const Profile = () => {
   const { githubState } = useGithub();
-  console.log("profile");
-  console.log({githubState});
-
+  
   return (
     <Wrapper>
       <WrapperImage
-        src="https://avatars.githubusercontent.com/u/2355303?v=4"
+        src={githubState.user.avatar_url}
         alt="Avatar of user"
       />
       <WrapperInfoUser>
         <div>
           <h1>{githubState.user.name}</h1>
-          <WrapperUsername>
+          <WrapperUserData>
             <h3>Username: </h3>
             <a
               href={githubState.user.html_url}
@@ -25,7 +23,31 @@ const Profile = () => {
             >
               {githubState.user.login}
             </a>
-          </WrapperUsername>
+          </WrapperUserData>
+          { githubState.user.company && 
+            <WrapperUserData>
+              <h3>Company: </h3>
+              <span>{githubState.user.company}</span>
+            </WrapperUserData>
+          }
+          { githubState.user.location && 
+            <WrapperUserData>
+              <h3>Location: </h3>
+              <span>{githubState.user.location}</span>
+            </WrapperUserData>
+          }
+          { githubState.user.blog && 
+            <WrapperUserData>
+              <h3>Blog: </h3>
+              <a
+                href={githubState.user.blog}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {githubState.user.blog}
+              </a>
+            </WrapperUserData>
+          }
         </div>
         <WrapperStatusCount>
           <div>
@@ -88,7 +110,7 @@ const WrapperStatusCount = styled.div`
   text-align: center;
 `;
 
-const WrapperUsername = styled.div`
+const WrapperUserData = styled.div`
   display: flex;
   align-items: center;
   margin-top: 8px;
