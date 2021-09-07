@@ -69,7 +69,7 @@ export const WrapperTabPanel = styled(TabPanel)`
   display: none;
   min-height: 40vh;
   padding: 16px;
-  margin-top: -9px;
+  margin-top: -10px;
   border: 1px solid #ccc;
   
   &.is-selected {
