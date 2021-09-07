@@ -11,19 +11,22 @@ function Header() {
     else return getUser(searchedUser);
   }
 
-  const handleChange = (e => {
-    setSearchedUser(e.target.value);
-    submitGetUser();
-  })
+  const handleChange = (newUsername => { setSearchedUser(newUsername); })
 
   return (
     <header>
       <Wrapper>
         <input 
           type="text"
-          onChange={e => handleChange(e)}
-          placeholder="Digite o nome do usuário a pesquisar" />
-        <button type="submit">Buscar</button>
+          onChange={e => handleChange(e.target.value)}
+          placeholder="Digite o nome do usuário a pesquisar"
+        />
+        <button 
+          type="submit"
+          onClick={submitGetUser}
+        >
+          Buscar
+        </button>
       </Wrapper>
     </header>
   )
