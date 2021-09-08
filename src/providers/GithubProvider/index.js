@@ -2,7 +2,7 @@ import React, { createContext, useCallback, useState } from 'react';
 import api from '../../services/api';
 
 export const GithubContext = createContext({
-  user: {},
+  user: {}, 
   repositories: [],
   starred: [],
 });
@@ -27,6 +27,27 @@ const GithubProvider = ({ children }) => {
     repositories: [],
     starred: [],
   });
+
+  const getUserRepos = (username) => {
+    console.log(githubState.user.login)
+    console.log(username)
+
+    api.get(`users/${username}/repos`).then(({data}) => {
+      setGithubState(prevState => ({ 
+        ...prevState,
+        repositories: data
+      }))
+    })
+  }
+
+  const getUserStarred = (username) => {
+    api.get(`users/${username}/starred`).then(({data}) => {
+      setGithubState(prevState => ({ 
+        ...prevState,
+        starred: data
+      }))
+    })
+  }
 
   const getUser = (username) => {
     setGithubState(prevState => ({
@@ -62,12 +83,11 @@ const GithubProvider = ({ children }) => {
 
   const contextValue = {
     githubState,
-    getUser: useCallback( username => getUser(username), []),
+    getUser: useCallback( username => getUser(username), []), // eslint-disable-next-line
+    getUserRepos: useCallback( username => getUserRepos(username), []),
+    getUserStarred: useCallback( username => getUserStarred(username), []) 
   }
   
-  console.log("provider");
-  console.log(contextValue);
-
   return (
     <GithubContext.Provider value={contextValue}>
       {children}

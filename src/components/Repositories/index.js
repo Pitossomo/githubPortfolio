@@ -1,9 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components';
 import { Tabs, TabList, Tab, TabPanel } from "react-tabs";
 import RepositoryItem from '../RepositoryItem';
+import useGithub from '../../hooks/githubHooks';
 
 function Repositories() {
+  const { githubState, getUserRepos, getUserStarred } = useGithub();
+
+  useEffect(() => {
+    if (!githubState.user.login) return;
+    getUserRepos(githubState.user.login);
+    getUserStarred(githubState.user.login);
+    
+    // eslint-disable-next-line
+  }, [githubState.user.login])
+
   return (
     <div>
       <WrapperTabs
@@ -15,8 +26,23 @@ function Repositories() {
           <WrapperTab>Starred</WrapperTab>
         </WrapperTabList>
         <WrapperTabPanel>
-          <RepositoryItem />
+          { githubState.repositories.map(item => ( 
+            <RepositoryItem
+              key={item.id}
+              name={item.name}
+              fullName={item.full_name}
+              url={item.html_url}
+            />
+          ))}
         </WrapperTabPanel>
+        { githubState.starred.map(item => ( 
+            <RepositoryItem
+              key={item.id}
+              name={item.name}
+              fullName={item.full_name}
+              url={item.html_url}
+            />
+          ))}
         <WrapperTabPanel>
           <RepositoryItem />
         </WrapperTabPanel>
@@ -35,7 +61,7 @@ export const WrapperTabList = styled(TabList)`
   list-style-type: none;
   padding: 8px 0;
   display: flex;
-  margin: 0;
+  margin: 0 16px;
 `;
 WrapperTabList.tabsRole = 'TabList';
 
@@ -43,12 +69,10 @@ export const WrapperTab = styled(Tab)`
   width: 200px;
   display: flex;
   justify-content: center;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+  border-radius: 16px;
   border: 1px solid #ccc;
   padding: 12px;
+  margin: 0 16px;
   user-select: none;
   cursor: pointer;
 
@@ -59,8 +83,8 @@ export const WrapperTab = styled(Tab)`
   &.is-selected {
     z-index: 99999;
     background-color: #fff;
-    box-shadow: 0 -3px 0px 0.3px rgba(0,0,0,0.1);
-    border-bottom: 1px solid white;
+    box-shadow: 0 3px 0px 0.3px rgba(2,5,8,0.5);
+    border-bottom: 1px solid #3182ce;
   }
 `;
 WrapperTab.tabsRole = 'Tab';
@@ -69,11 +93,11 @@ export const WrapperTabPanel = styled(TabPanel)`
   display: none;
   min-height: 40vh;
   padding: 16px;
-  margin-top: -10px;
-  border: 1px solid #ccc;
   
   &.is-selected {
-    display: block;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap; 
   }
 `;
 WrapperTabPanel.tabsRole = 'TabPanel';
