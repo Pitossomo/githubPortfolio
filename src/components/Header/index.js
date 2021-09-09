@@ -1,10 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import useGithub from '../../hooks/githubHooks'
 
 function Header() {
   const { getUser } = useGithub();
   const [ searchedUser, setSearchedUser ] = useState(undefined);
+
+  useEffect(() => {
+    getUser("Pitossomo")
+    
+    // eslint-disable-next-line
+  }, [])
 
   const submitGetUser = () => {
     if (!searchedUser) return;
@@ -19,7 +25,7 @@ function Header() {
         <input 
           type="text"
           onChange={e => handleChange(e.target.value)}
-          placeholder="Digite o nome do usuário a pesquisar"
+          placeholder="Digite o nome do usuário a pesquisar. P.ex.: Pitossomo"
         />
         <button 
           type="submit"

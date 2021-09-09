@@ -32,6 +32,8 @@ function Repositories() {
               name={item.name}
               fullName={item.full_name}
               url={item.html_url}
+              pagesUrl={item.has_pages && `https://${githubState.user.login}.github.io/${item.name}`}
+              pagesName={`${githubState.user.login}.github.io/${item.name}`}
             />
           ))}
         </WrapperTabPanel>

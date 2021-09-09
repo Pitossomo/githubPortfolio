@@ -1,22 +1,32 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function RepositoryItem({name, fullName, url}) {
+function RepositoryItem({name, fullName, url, pagesUrl, pagesName}) {
   return (
     <Wrapper>
       <h2>{name}</h2>
+      <h4>Repo</h4>
       <a href={url} target="_blank" rel="noreferrer">
         {fullName}
       </a>
+      { pagesUrl && <>
+        <h4>Github Pages</h4>
+        <a href={pagesUrl} target="_blank" rel="noreferrer">
+          {pagesName}
+        </a>
+      </> }
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
   border: 1px solid #ccc;
+  display: flex-block;
+  flex-row: column;
+  align-items: center;
   border-radius: 8px;
   margin: 16px;
-  height: 150px;
+  height: 200px;
   width: 350px;
   padding: 8px;
 
@@ -36,7 +46,7 @@ const Wrapper = styled.div`
   a {
     font-size: 14px;
     font-weight: bold;
-    margin: 8px;
+    margin: 0 16px;
     color: #3182ce;
   }
 `;

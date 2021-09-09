@@ -29,9 +29,6 @@ const GithubProvider = ({ children }) => {
   });
 
   const getUserRepos = (username) => {
-    console.log(githubState.user.login)
-    console.log(username)
-
     api.get(`users/${username}/repos`).then(({data}) => {
       setGithubState(prevState => ({ 
         ...prevState,
@@ -87,7 +84,7 @@ const GithubProvider = ({ children }) => {
     getUserRepos: useCallback( username => getUserRepos(username), []),
     getUserStarred: useCallback( username => getUserStarred(username), []) 
   }
-  
+
   return (
     <GithubContext.Provider value={contextValue}>
       {children}
